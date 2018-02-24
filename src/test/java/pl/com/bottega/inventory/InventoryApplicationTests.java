@@ -90,14 +90,14 @@ public class InventoryApplicationTests {
     inflate("Pants", 10);
 
     purchase(
-        entry("Pants", 10),
-        entry("Socks", 2),
-        entry("Trousers", 2)
+            entry("Pants", 10),
+            entry("Socks", 2),
+            entry("Trousers", 2)
     ).
-        andExpect(status().isUnprocessableEntity()).
-        andExpect(jsonPath("$.errors.Socks").value("no such sku")).
-        andExpect(jsonPath("$.errors.Trousers").value("no such sku")).
-        andExpect(jsonPath("$.errors.Pants").doesNotExist());
+            andExpect(status().isUnprocessableEntity()).
+            andExpect(jsonPath("$.errors.Socks").value("no such sku")).
+            andExpect(jsonPath("$.errors.Trousers").value("no such sku")).
+            andExpect(jsonPath("$.errors.Pants").doesNotExist());
   }
 
   @Test
@@ -142,7 +142,7 @@ public class InventoryApplicationTests {
         andExpect(jsonPath("$.success").value(false));
 
     purchase(
-        entry("Pants", 5),
+        entry("Pants", 6),
         entry("Trousers", 10)
     ).
         andExpect(status().isOk()).
@@ -165,9 +165,9 @@ public class InventoryApplicationTests {
   public void invalidPurchase() throws Exception {
     purchase(entry("Pants", -1), entry("Shoes", 1001)).
         andExpect(status().isUnprocessableEntity()).
-        andExpect(jsonPath("$.errors.Pants").value("must be between 1 and 999")).
-        andExpect(jsonPath("$.errors.Shoes").value("must be between 1 and 999"))
-        ;
+            andExpect(jsonPath("$.errors.Pants").value("must be between 1 and 999")).
+            andExpect(jsonPath("$.errors.Shoes").value("must be between 1 and 999"))
+    ;
   }
 
   private String toBuy(MapEntry<String, Integer>... items) throws Exception {
